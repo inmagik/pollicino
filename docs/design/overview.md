@@ -13,10 +13,10 @@ This is a single server implementation providing:
 
 We want to provide server side support for mobile apps, which includes:
 
-* [Authentication](docs/design/authentication.md)
-* [Push notifications] (docs/design/push_notifications.md)
-* [Cloud database] (docs/design/cloud_database.md)
-* [Analytics] (docs/design/analytics.md)
+* [Authentication](authentication.md)
+* [Push notifications] (push_notifications.md)
+* [Cloud database] (cloud_database.md)
+* [Analytics] (analytics.md)
 
 This will be provided by a django based web application.
 
