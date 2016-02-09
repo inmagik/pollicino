@@ -144,7 +144,7 @@ class Installation(models.Model):
     registration_id = models.CharField(max_length=200, unique=True) 
     platform = models.CharField(max_length=200)
     updated_at = models.DateTimeField(auto_now=True)
-    app_version = models.CharField(max_length=200)
+    app_version = models.CharField(max_length=200, null=True, blank=True)
 
     #current app locale, for future i18n
     locale = models.CharField(max_length=200, null=True, blank=True)
