@@ -9,14 +9,21 @@ class App(models.Model):
     Client app model.
     All models will be related to this one.
     """
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     name = models.CharField(max_length=255)
     # for now we keep a single client secret.
     # probably will be moved to a separate table
-    client_secret = models.UUIDField(default=uuid.uuid4, editable=False)
+    client_secret = models.UUIDField(default=uuid.uuid4)
 
 
 
     def __str__(self):
         return self.name
+
+
+
+
+class ClientToken(models.Model):
+    key = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
+    client_secret = models.UUIDField(unique=True)
 
