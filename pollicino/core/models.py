@@ -14,3 +14,9 @@ class App(models.Model):
     # for now we keep a single client secret.
     # probably will be moved to a separate table
     client_secret = models.UUIDField(default=uuid.uuid4, editable=False)
+
+
+
+    def __str__(self):
+        return self.name
+
