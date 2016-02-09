@@ -6,6 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+#sqlite
+*.sqlite
+*.sqlite3
+*.db
+*.db3
+
 # Distribution / packaging
 .Python
 env/
