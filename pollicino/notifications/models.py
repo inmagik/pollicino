@@ -120,6 +120,7 @@ class InstallationQuerySet(models.QuerySet):
     """
     custom queryset that adds send_notifications method
     """
+    #TODO ! USE SENDING MULTIPLE NOTIFICATIONS!
     def send_notifications(self, payload, identifier=None, expiry=None):
         for item in self:
             item.send_notification(payload, identifier=None, expiry=None)
@@ -138,10 +139,10 @@ class Installation(models.Model):
     """
     app = models.ForeignKey(core_models.App)
     # device_id is an identifier that comes from the device, via OS API
-    device_token = models.CharField(max_length=200, unique=True) 
+    device_token = models.CharField(max_length=200) 
     # registration_id comes from registration action on the push service provider
     # not sure if needed
-    registration_id = models.CharField(max_length=200, unique=True) 
+    registration_id = models.CharField(max_length=200, unique=True, blank=True, null=True) 
     platform = models.CharField(max_length=200)
     updated_at = models.DateTimeField(auto_now=True)
     app_version = models.CharField(max_length=200, null=True, blank=True)

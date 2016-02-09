@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .serializers import ClientTokenSerializer
-from .models import ClientToken
+from .models import ClientToken, App
 
 class ObtainClientAuth(APIView):
     throttle_classes = ()
@@ -18,7 +18,9 @@ class ObtainClientAuth(APIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         client_secret = serializer.data['client_secret']
-        token, created = ClientToken.objects.get_or_create(client_secret=client_secret)
+        app_id = serializer.data['app_id']
+        app = App.objects.get(pk=app_id)
+        token, created = ClientToken.objects.get_or_create(client_secret=client_secret, app=app)
         return Response({'token': token.key})
 
 
