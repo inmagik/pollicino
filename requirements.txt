@@ -1,2 +1,6 @@
+apns==2.0.1
 Django==1.9.2
+django-cors-headers==1.1.0
+djangorestframework==3.3.2
+PyJWT==1.4.0
 wheel==0.26.0
