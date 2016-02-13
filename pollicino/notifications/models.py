@@ -156,7 +156,7 @@ class Installation(models.Model):
     objects = InstallationManager()
 
     def __unicode__(self):
-        return u"%s - %s" % (self.app, self.device_token)
+        return u"%s - %s" % (self.app.pk, self.device_token)
 
 
     def send_notification(self, payload, identifier=None, expiry=None):
