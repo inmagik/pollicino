@@ -24,7 +24,7 @@ class PushConfiguration(models.Model):
     gcm_max_recipients = models.PositiveSmallIntegerField(default=1000, validators=[MaxValueValidator(1000)])
 
 
-    def __str__(self):
+    def __unicode__(self):
         return self.app
 
 
@@ -155,8 +155,8 @@ class Installation(models.Model):
 
     objects = InstallationManager()
 
-    def __str__(self):
-        return "%s - %s" % (self.app, self.device_token)
+    def __unicode__(self):
+        return u"%s - %s" % (self.app, self.device_token)
 
 
     def send_notification(self, payload, identifier=None, expiry=None):
