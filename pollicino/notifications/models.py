@@ -25,7 +25,7 @@ class PushConfiguration(models.Model):
 
 
     def __unicode__(self):
-        return self.app
+        return self.app.id
 
 
     @property
