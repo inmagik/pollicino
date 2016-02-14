@@ -1,8 +1,50 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="container container-fluid">
-    <h2>Welcome home</h2>
+<div class="container-fluid">
+    <div class="text-center jumbotron jumbo-home">
+        <h1>Pollicino</h1>
+        <p>
+            A mobile app BAAS.
+        </p>
+        
+        <p class="text-center" style="margin-top:120px;">
+            <img src="{{STATIC_URL}}ui_images/inmagik_circle.png" style="width:64px" alt="">
+            <p>
+                <small>by INMAGIK</small>
+            </p>
+        </p>
+    
+    </div>
+
+    <div class="row">
+        <div class="col col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-body text-center">
+                    <h3>Push notifications</h3>
+                    <p>
+                        Configure and send push notifications from cordova based apps, with <a href="#">pollicino-client</a>.
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="col col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-body text-center">
+                    <h3>Users</h3>
+                    <p>
+                        Allow signup and login from your app
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+
+
+    </div>
+    
 </div>
 
 
