@@ -140,6 +140,14 @@ class NotificationMessageCreate(LoginRequiredView, HasAppPk, CreateView):
     model = NotificationMessage
     form_class = NotificationMessageForm
 
+    def form_valid(self, form):
+        app = App.objects.get(pk=self.kwargs['app_pk'])
+        candidate = form.save(commit=False)
+        candidate.app = app
+        candidate.save()
+        rvs = reverse('app-notifications-detail', args=(app.id, candidate.pk))
+        return HttpResponseRedirect(rvs)
+
 
 class NotificationMessageUpdate(LoginRequiredView, HasAppPk, UpdateView):
 
