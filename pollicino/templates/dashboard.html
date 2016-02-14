@@ -3,45 +3,49 @@
 {% block content %}
 
 <div class="container container-fluid">
-    <h3>Dashboard</h3>
+    <ol class="breadcrumb">
+      <li class="active">Dashboard</li>
+    </ol>
+    {% if apps %}
+
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h2 class="panel-title pull-left">
-                Your apps
-            </h2>
+        <div class="panel-body">
+            <h3>Your applications</h3>
+            <p class="pull-left">
+                Here you can access configuration options for your applications and add new ones.
+            </p>
             <a class="btn btn-warning pull-right btn-sm" href="{% url 'app-create' %}">
                 Add new app
-            </a>
-            <div class="clearfix"></div>
-        </div>
-        <div class="panel-body">
-            {% if apps %}
-            <ul class="list-group">
-                {% for app in apps %}
-                <li class="list-group-item">
-                    <div>
-                    <h4 class="pull-left">{{ app.name }}</h4>
-                    <a class="btn btn-primary pull-right" href="{% url "app-detail" app.pk %}">
-                        {% bootstrap_icon "cog" %}
-                    </a>
-                    <div class="clearfix"></div>
-                    <p>
-                        something here
-                    </p>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-            {% else %}
-                <p class="text-center">You have no apps.</p>
-            {% endif %}
-            
+    </a>
+    <div class="clearfix"></div>        
         </div>
     </div>
-
+    
+    
+    <ul class="list-group">
+        {% for app in apps %}
+        <li class="list-group-item">
+            <div>
+            <h4 class="pull-left">{{ app.name }}</h4>
+            <a class="btn btn-primary pull-right" href="{% url "app-detail" app.pk %}">
+                {% bootstrap_icon "cog" %}
+            </a>
+            <div class="clearfix"></div>
+            <p>
+                something here
+            </p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p class="text-center">You have no apps.</p>
+    {% endif %}
+    
 
 
 </div>
 
 
 {% endblock %}
+

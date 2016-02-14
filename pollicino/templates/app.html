@@ -3,7 +3,10 @@
 {% block content %}
 
 <div class="container">
-    <h3>{{ object.name}}</h3>
+    <ol class="breadcrumb">
+      <li><a href="{% url 'app-detail' app.pk %}">{{app.name}}</a></li>
+      <li class="active">Overview</li>
+    </ol>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h2 class="panel-title">
@@ -49,7 +52,7 @@
                 <div class="col col-sm-2">
                     {% if app.push_configuration %}
                     <a href="{% url 'app-pushconfig-edit' app.pk %}" class="btn btn-primary">
-                    Configure push
+                    {% bootstrap_icon "cog" %} Configure push
                     </a>        
                     {% else %}
                     <a href="{% url 'app-pushconfig-create' app.pk %}" class="btn btn-primary">
@@ -67,7 +70,7 @@
                     Send push notifications and see notifications history.
                 </div>
                 <div class="col col-sm-2">
-                    <a href="" class="btn btn-primary">
+                    <a href="{% url 'app-notifications' app.pk %}" class="btn btn-primary">
                     Notifications panel
                     </a>        
                 </div>

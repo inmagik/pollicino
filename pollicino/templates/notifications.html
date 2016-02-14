@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block content %}
+
+<div class="container container-fluid">
+    <ol class="breadcrumb">
+      <li><a href="{% url 'app-detail' app.pk %}">{{app.name}}</a></li>
+      <li class="active">Push notifications</li>
+    </ol>
+    
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h3>Notification messages</h3>
+            <p class="pull-left">
+                Manage and send push messages from here.
+            </p>
+            <a class="btn btn-warning pull-right btn-sm" href="{% url 'app-notifications-create' app.pk %}">
+                New notification
+            </a>
+    <div class="clearfix"></div>        
+        </div>
+    </div>
+
+    {% if object_list %}
+    
+    
+    <ul class="list-group">
+        {% for message in object_list %}
+        <li class="list-group-item">
+            <div>
+            <h4 class="pull-left">{{ message.id }}</h4>
+            <a class="btn btn-primary pull-right" href="{% url 'app-notifications-detail' app.pk message.pk %}">
+                Details
+            </a>
+            <div class="clearfix"></div>
+            <p>
+                Text: {{message.alert}}
+            </p>
+            <p>
+                {% if message.sent %}
+                <span class="label label-success">Sent</span>
+                {% else %}
+                <span class="label label-default">Not sent</span>
+                {% endif %}
+            </p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p class="text-center">You have no notification messages.</p>
+    {% endif %}
+    
+
+
+</div>
+
+
+{% endblock %}
+

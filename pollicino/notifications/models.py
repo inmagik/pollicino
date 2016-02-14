@@ -191,9 +191,9 @@ class NotificationMessage(models.Model):
     badge = models.IntegerField(null=True, blank=True, default=0)
     sound = models.CharField(max_length=200, null=True, blank=True, default='default')
     alert = models.TextField()
-    send = models.BooleanField()
+    send = models.BooleanField(default=False)
 
-    sent = models.BooleanField(editable=False, default=False    )
+    sent = models.BooleanField(editable=False, default=False )
 
 
     def save(self, *args, **kwargs):

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView
+from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, View
 
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -11,23 +11,27 @@ from django.core.urlresolvers import reverse
 #UserModel = get_user_model()
 
 from core.models import App
-from notifications.models import PushConfiguration
+from notifications.models import PushConfiguration, NotificationMessage
+
+
+class LoginRequiredView(object):
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(LoginRequiredView, self).dispatch(request, *args, **kwargs)
+
 
 class HomeView(TemplateView):
-
     template_name = "home.html"
 
 
-@method_decorator(login_required, name='dispatch')
-class DashboardView(ListView):
+class DashboardView(LoginRequiredView, ListView):
 
     template_name = "dashboard.html"
     context_object_name = 'apps'
     queryset = App.objects.all()
 
 
-@method_decorator(login_required, name='dispatch')
-class AppView(DetailView):
+class AppView(LoginRequiredView, DetailView):
 
     template_name = "app.html"
     model = App
@@ -43,8 +47,7 @@ class AppCreateForm(ModelForm):
         fields = ['name']
 
 
-@method_decorator(login_required, name='dispatch')
-class AppCreateView(CreateView):
+class AppCreateView(LoginRequiredView, CreateView):
 
     template_name = "app_create.html"
     model = App
@@ -78,8 +81,7 @@ class HasAppPk(object):
         return ctx
 
 
-@method_decorator(login_required, name='dispatch')
-class PushConfigurationEdit(HasAppPk, UpdateView):
+class PushConfigurationEdit(LoginRequiredView, HasAppPk, UpdateView):
 
     template_name = "app_push_update.html"
     model = PushConfiguration
@@ -94,15 +96,14 @@ class PushConfigurationEdit(HasAppPk, UpdateView):
         return rvs
 
 
-@method_decorator(login_required, name='dispatch')
-class PushConfigurationCreate(HasAppPk, CreateView):
+class PushConfigurationCreate(LoginRequiredView, HasAppPk, CreateView):
 
     template_name = "app_push_update.html"
     model = PushConfiguration
     form_class = PushConfigurationForm
 
     def form_valid(self, form):
-        app = app.objects.get(pk=self.kwargs['app_pk'])
+        app = App.objects.get(pk=self.kwargs['app_pk'])
         candidate = form.save(commit=False)
         candidate.app = app
         candidate.save()
@@ -113,4 +114,44 @@ class PushConfigurationCreate(HasAppPk, CreateView):
     def get_success_url(self):
         rvs = reverse('app-detail', args=(self.object.app.id,))
         return rvs
+
+
+class PushNotifications(LoginRequiredView, HasAppPk, ListView):
+
+    template_name = "notifications.html"
+    queryset = NotificationMessage.objects.all()
     
+
+
+class NotificationMessageForm(ModelForm):
+    class Meta:
+        model = NotificationMessage
+        fields = ['alert']    
+
+class NotificationMessageUpdateForm(ModelForm):
+    class Meta:
+        model = NotificationMessage
+        fields = ['alert', 'send']    
+
+
+class NotificationMessageCreate(LoginRequiredView, HasAppPk, CreateView):
+
+    template_name = "notification_create.html"
+    model = NotificationMessage
+    form_class = NotificationMessageForm
+
+
+class NotificationMessageUpdate(LoginRequiredView, HasAppPk, UpdateView):
+
+    template_name = "notification_update.html"
+    model = NotificationMessage
+    form_class = NotificationMessageUpdateForm
+
+    def form_valid(self, form):
+        app = App.objects.get(pk=self.kwargs['app_pk'])
+        candidate = form.save(commit=False)
+        #candidate.app = app
+        candidate.save()
+        rvs = reverse('app-notifications-detail', args=(app.id, candidate.pk))
+        return HttpResponseRedirect(rvs)
+
