@@ -13,7 +13,7 @@
         <div class="panel-heading">
             <h2 class="panel-title">
                 Notification message {{object.pk}}
-                {% if message.sent %}
+                {% if object.sent %}
                 <span class="label label-success">Sent</span>
                 {% else %}
                 <span class="label label-default">Not sent</span>
