@@ -1,5 +1,7 @@
 apns==2.0.1
 Django==1.9.2
+django-authtools==1.4.0
+django-bootstrap3==6.2.2
 django-cors-headers==1.1.0
 djangorestframework==3.3.2
 PyJWT==1.4.0

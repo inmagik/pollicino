@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,10 +43,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
 
+    'authtools',
+
 
     'core',
     'notifications',
 
+    'bootstrap3',
+    'ui'
 
 ]
 
@@ -66,7 +71,7 @@ ROOT_URLCONF = 'pollicino.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ os.path.abspath( os.path.join(BASE_DIR, 'templates') ) ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,6 +79,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # adds STATIC_URL
+                'django.template.context_processors.static',
             ],
         },
     },
@@ -135,3 +142,8 @@ STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../static"))
 
 #TODO: change me!
 CORS_ORIGIN_ALLOW_ALL = True
+
+AUTH_USER_MODEL = 'authtools.User'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGOUT_URL = 'logout'

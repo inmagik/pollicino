@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block content %}
+
+<div class="container container-fluid">
+    <h3>Dashboard</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title pull-left">
+                Your apps
+            </h2>
+            <button class="btn btn-warning pull-right btn-sm">
+                Add new app
+            </button>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            {% if apps %}
+            <ul class="list-group">
+                {% for app in apps %}
+                <li class="list-group-item">
+                    <div>
+                    <h4 class="pull-left">{{ app.name }}</h4>
+                    <button class="btn btn-primary pull-right">
+                        {% bootstrap_icon "cog" %}
+                    </button>
+                    <div class="clearfix"></div>
+                    <p>
+                        something here
+                    </p>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <p class="text-center">You have no apps.</p>
+            {% endif %}
+            
+        </div>
+    </div>
+
+
+
+</div>
+
+
+{% endblock %}

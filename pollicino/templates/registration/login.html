@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+<div class="container container-fluid">
+    <div class="panel panel-default">
+    <div class="panel-heading">Login</div>
+    <div class="panel-body">
+      <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-success">
+            Login
+            </button>
+        {% endbuttons %}
+      </form>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <p class="submitRow">
+          <a href="{% url 'password_reset' %}">{% trans "Forgot Password?" %}</a>
+        </p>
+    </div>
+  </div>
+    
+      
+    
+</div>
+
+
+{% endblock %}
