@@ -21,9 +21,9 @@
                 <li class="list-group-item">
                     <div>
                     <h4 class="pull-left">{{ app.name }}</h4>
-                    <button class="btn btn-primary pull-right">
+                    <a class="btn btn-primary pull-right" href="{% url "app-detail" app.pk %}">
                         {% bootstrap_icon "cog" %}
-                    </button>
+                    </a>
                     <div class="clearfix"></div>
                     <p>
                         something here

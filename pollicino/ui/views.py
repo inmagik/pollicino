@@ -21,9 +21,9 @@ class DashboardView(ListView):
 @method_decorator(login_required, name='dispatch')
 class AppView(DetailView):
 
-    template_name = "dashboard.html"
+    template_name = "app.html"
     model = App
 
     def get_context_data(self,  **kwargs):
-        ctx = super(DashboardView, self).get_context_data( **kwargs)
+        ctx = super(AppView, self).get_context_data( **kwargs)
         return ctx

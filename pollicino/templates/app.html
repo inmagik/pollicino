@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block content %}
+
+<div class="container-fluid">
+    <h3>{{ object.name}}</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">
+                Secrets
+            </h2>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col col-sm-3 text-right">
+                    App id    
+                </div>
+                <div class="col col-sm-3">
+                    {{ app.pk }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-sm-3 text-right">
+                    Client secret
+                </div>
+                <div class="col col-sm-3">
+                    {{ app.client_secret }}
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+
+</div>
+
+
+{% endblock %}
