@@ -13,6 +13,11 @@
         <div class="panel-heading">
             <h2 class="panel-title">
                 Notification message {{object.pk}}
+                {% if message.sent %}
+                <span class="label label-success">Sent</span>
+                {% else %}
+                <span class="label label-default">Not sent</span>
+                {% endif %}
             </h2>
         </div>
         <div class="panel-body">
