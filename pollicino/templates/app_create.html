@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block content %}
+
+<div class="container-fluid">
+    <h3>New app</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">
+                Secrets
+            </h2>
+        </div>
+        <div class="panel-body">
+
+            <form method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons submit='OK' reset="Cancel" %}{% endbuttons %}
+            </form>
+            
+            
+        </div>
+    </div>
+
+
+
+</div>
+
+
+{% endblock %}

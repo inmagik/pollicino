@@ -11,7 +11,7 @@ from apns import APNs, Frame, Payload
 
 
 class PushConfiguration(models.Model):
-    app = models.OneToOneField(core_models.App)
+    app = models.OneToOneField(core_models.App, related_name="push_configuration")
     
     apns_certificate = models.FileField(null=True, upload_to="apns_certificates")
     apns_certificate_dev = models.FileField(null=True, upload_to="apns_certificates_dev")

@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 import uuid
 from django.db import models
 from .utils import generate_jwt
+from django.conf import settings
+
 
 def getuuid():
     return str(uuid.uuid4())
@@ -17,6 +19,9 @@ class App(models.Model):
     # for now we keep a single client secret.
     # probably will be moved to a separate table
     client_secret = models.UUIDField(default=uuid.uuid4)
+
+    #app owner
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
 
 
 

@@ -33,6 +33,55 @@
 
 
 
+    <!-- notifications -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">
+                Push notifications
+            </h2>
+        </div>
+        <div class="panel-body">
+            <h4>Push configuration</h4>
+            <div class="row">
+                <div class="col col-sm-10">
+                    Edit push notifications settings for iOS and Android
+                </div>
+                <div class="col col-sm-2">
+                    {% if app.push_configuration %}
+                    <a href="{% url 'app-pushconfig-edit' app.pk %}" class="btn btn-primary">
+                    Configure push
+                    </a>        
+                    {% else %}
+                    <a href="{% url 'app-pushconfig-create' app.pk %}" class="btn btn-primary">
+                    Create push config
+                    </a>        
+                    {% endif %}
+                </div>
+            </div>
+            
+            <hr>
+
+            {% if app.push_configuration %}
+            <div class="row">
+                <div class="col col-sm-10">
+                    Send push notifications and see notifications history.
+                </div>
+                <div class="col col-sm-2">
+                    <a href="" class="btn btn-primary">
+                    Notifications panel
+                    </a>        
+                </div>
+            </div>
+            
+            
+            {% endif %}
+
+            
+        </div>
+    </div>
+
+
+
 </div>
 
 
