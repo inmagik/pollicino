@@ -124,9 +124,9 @@ class InstallationQuerySet(models.QuerySet):
     custom queryset that adds send_notifications method
     """
     #TODO ! USE SENDING MULTIPLE NOTIFICATIONS!
-    def send_notifications(self, payload, identifier=None, expiry=None):
+    def send_notifications(self, alert=None, badge=None, sound=None, identifier=None, expiry=None):
         for item in self:
-            item.send_notification(payload, identifier=None, expiry=None)
+            item.send_notification(alert=alert, badge=badge, sound=sound, identifier=None, expiry=None)
 
 
 class InstallationManager(models.Manager):
@@ -146,7 +146,7 @@ class Installation(models.Model):
     device_token = models.CharField(max_length=200) 
     # registration_id comes from registration action on the push service provider
     # not sure if needed
-    registration_id = models.CharField(max_length=200, unique=True, blank=True, null=True) 
+    registration_id = models.CharField(max_length=200, blank=True, null=True) 
     platform = models.CharField(max_length=200)
     updated_at = models.DateTimeField(auto_now=True)
     app_version = models.CharField(max_length=200, null=True, blank=True)
@@ -163,17 +163,19 @@ class Installation(models.Model):
         return u"%s - %s" % (self.app.pk, self.device_token)
 
 
-    def send_notification(self, payload, identifier=None, expiry=None):
+    def send_notification(self, alert=None, badge=None, sound=None, identifier=None, expiry=None):
         cfg = PushConfiguration.objects.get(app=self.app)
         if not cfg:
             raise ValueError("No push configuration for app %s" % app)
         
         if self.platform.upper() == 'IOS':
+            payload = Payload(alert=alert, sound=sound, badge=badge)
             return cfg.send_notification_apns(self.device_token, payload, 
                 identifier=identifier, expiry=expiry)
 
         if self.platform.upper() == 'ANDROID':
-            return cfg.send_notification_gcm(self.device_token, payload, 
+            data = { "body" : alert}
+            return cfg.send_notification_gcm(self.device_token, data, 
                 identifier=identifier, expiry=expiry)
 
 
@@ -207,8 +209,7 @@ class NotificationMessage(models.Model):
     def save(self, *args, **kwargs):
         if self.send and not self.sent:
             installations = Installation.objects.filter(app=self.app)
-            payload = Payload(alert=self.alert, sound=self.sound or None, badge=self.badge)
-            installations.send_notifications(payload, identifier=self.pk)
+            installations.send_notifications(alert=self.alert, sound=self.sound or None, badge=self.badge, identifier=self.pk)
             self.sent = True
 
 
