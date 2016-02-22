@@ -2,10 +2,10 @@
 
   <ul class="pagination pull-left">
       <li class="active">
-        <a href="#">Pagina {{ page_obj.number }} di {{ page_obj.paginator.num_pages }}</a>
+        <a href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a>
       </li>
       <li class="active">
-        <a href="#">Record {{ page_obj.start_index }} - {{ page_obj.end_index }} di {{ paginator.count }}</a>
+        <a href="#">Record {{ page_obj.start_index }} - {{ page_obj.end_index }} of {{ paginator.count }}</a>
       </li>
   </ul>
 
