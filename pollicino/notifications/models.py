@@ -74,7 +74,7 @@ class PushConfiguration(models.Model):
 
 
 
-    def send_notification_gcm(self, device_token, payload):
+    def send_notification_gcm(self, device_token, payload, identifier=None, expiry=None):
         gcm = GCM(self.gcm_api_key)
         return gcm.json_request(registration_ids=[device_token], data=payload)
 
