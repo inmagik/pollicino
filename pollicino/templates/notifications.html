@@ -22,6 +22,27 @@
         </div>
     </div>
 
+    
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+        <h4>Filter notifications</h4>
+        <form action="" method="GET">
+        {% bootstrap_form form %}
+        <button class="btn" type="submit">Search</button>
+        </form>
+        
+
+        {% if filtering %}
+        <p>
+            <b>You are viewing a filtered list of records.</b><br> 
+            <a href="{% url "app-notifications"  app.pk %}">Show all records</a>
+        </p>
+        
+        </div>
+        {% endif %}
+    </div>
+
     {% if object_list %}
     
     
@@ -50,6 +71,10 @@
     </ul>
     {% else %}
         <p class="text-center">You have no notification messages.</p>
+    {% endif %}
+
+    {% if is_paginated %}
+        {% include "paginator_search.html" %}
     {% endif %}
     
 

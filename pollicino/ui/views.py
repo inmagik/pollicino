@@ -3,7 +3,8 @@ from django.views.generic import TemplateView, DetailView, ListView, CreateView,
 
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.forms import ModelForm
+from django.forms import ModelForm, Form
+import django.forms as forms
 #from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -12,6 +13,8 @@ from django.core.urlresolvers import reverse
 
 from core.models import App
 from notifications.models import PushConfiguration, NotificationMessage
+from searchlist_views.search import SearchListView
+from searchlist_views.filters import BaseFilter
 
 
 class LoginRequiredView(object):
@@ -116,17 +119,33 @@ class PushConfigurationCreate(LoginRequiredView, HasAppPk, CreateView):
         return rvs
 
 
-class PushNotifications(LoginRequiredView, HasAppPk, ListView):
+class PushNotificationsFilter(BaseFilter):
+    search_fields = {
+        "search_string" : ['alert']
+    }
+
+
+class PushNotificationsSearchForm(Form):
+    search_string =  forms.CharField(
+        label='Text', 
+        widget=forms.TextInput(attrs={'placeholder': 'notification text'})
+      )
+
+
+class PushNotifications(LoginRequiredView, HasAppPk, SearchListView):
 
     template_name = "notifications.html"
     queryset = NotificationMessage.objects.all()
-    
+    filter_class = PushNotificationsFilter
+    form_class = PushNotificationsSearchForm
+    paginate_by = 10
 
 
 class NotificationMessageForm(ModelForm):
     class Meta:
         model = NotificationMessage
         fields = ['alert']    
+
 
 class NotificationMessageUpdateForm(ModelForm):
     class Meta:

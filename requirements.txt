@@ -8,3 +8,4 @@ PyJWT==1.4.0
 python-gcm==0.4
 requests==2.9.1
 wheel==0.26.0
+git+git://github.com/bianchimro/django-search-views.git@1e3051bbec0012e20309af01da15dc4a6582fefa

@@ -1,0 +1,71 @@
+<nav class="">
+
+  <ul class="pagination pull-left">
+      <li class="active">
+        <a href="#">Pagina {{ page_obj.number }} di {{ page_obj.paginator.num_pages }}</a>
+      </li>
+      <li class="active">
+        <a href="#">Record {{ page_obj.start_index }} - {{ page_obj.end_index }} di {{ paginator.count }}</a>
+      </li>
+  </ul>
+
+
+{% if object_list %}
+  <ul class="pagination pull-right">
+    {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}&{{get_query.urlencode}}">&lt;&lt;</a></li>
+    {% endif %}
+
+    {% if page_obj.number > 3 %}
+    <li>
+      <a href="?page=1&{{get_query.urlencode}}">1</a>
+    </li>
+    <li>
+      <a>...</a>
+    </li>
+    {% endif %}
+
+    {% if page_obj.number > 2 %}
+    <li>
+      <a href="?page={{ page_obj.number|add:"-2" }}&{{get_query.urlencode}}">{{ page_obj.number|add:"-2"}}</a>
+    </li>
+    {% endif %}
+    {% if page_obj.number > 1 %}
+    <li>
+      <a href="?page={{ page_obj.number|add:"-1" }}&{{get_query.urlencode}}">{{ page_obj.number|add:"-1"}}</a>
+    </li>
+    {% endif %}
+
+    <li class="active">
+      <a href="#">{{ page_obj.number }}</a>
+    </li>
+
+    {% if page_obj.paginator.num_pages > page_obj.number %}
+    <li>
+      <a href="?page={{ page_obj.number|add:"1" }}&{{get_query.urlencode}}">{{ page_obj.number|add:"1"}}</a>
+    </li>
+    {% endif %}
+    {% if page_obj.paginator.num_pages > page_obj.number|add:"1" %}
+    <li>
+      <a href="?page={{ page_obj.number|add:"2" }}&{{get_query.urlencode}}">{{ page_obj.number|add:"2"}}</a>
+    </li>
+    {% endif %}
+    {% if page_obj.paginator.num_pages > page_obj.number|add:"2" %}
+    <li>
+      <a>...</a>
+    </li>
+    <li>
+      <a href="?page={{page_obj.paginator.num_pages}}&{{get_query.urlencode}}">{{page_obj.paginator.num_pages}}</a>
+    </li>
+    {% endif %}
+
+    
+    {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}&{{get_query.urlencode}}">&gt;&gt;</a></li>
+    {% endif %}    
+  </ul>
+
+{% endif %} 
+
+
+</nav>
