@@ -6,6 +6,7 @@ from django.core.validators import MaxValueValidator
 
 import core.models as core_models
 from apns import APNs, Frame, Payload
+from gcm import GCM
 
 
 
@@ -74,12 +75,14 @@ class PushConfiguration(models.Model):
 
 
     def send_notification_gcm(self, device_token, payload):
-        pass
+        gcm = GCM(self.gcm_api_key)
+        return gcm.json_request(registration_ids=[device_token], data=payload)
 
 
     def send_notifications_gcm(self, device_tokens, payload, priority=10, 
         identifier=None, expiry=None):
-        pass
+        gcm = GCM(self.gcm_api_key)
+        return gcm.json_request(registration_ids=device_tokens, data=payload)
 
 
 
@@ -125,6 +128,7 @@ class InstallationQuerySet(models.QuerySet):
         for item in self:
             item.send_notification(payload, identifier=None, expiry=None)
 
+
 class InstallationManager(models.Manager):
     """
     Custom manager to use InstallationQuerySet and related methods
@@ -166,6 +170,10 @@ class Installation(models.Model):
         
         if self.platform.upper() == 'IOS':
             return cfg.send_notification_apns(self.device_token, payload, 
+                identifier=identifier, expiry=expiry)
+
+        if self.platform.upper() == 'ANDROID':
+            return cfg.send_notification_gcm(self.device_token, payload, 
                 identifier=identifier, expiry=expiry)
 
 
